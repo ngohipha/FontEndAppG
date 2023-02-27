@@ -19,5 +19,5 @@ abstract class Category with _$Category {
 }
 
 extension CategoryExt on Category {
-  String get fullImagePath => Config.apiURL + categoryImage;
+  String get fullImagePath => Config.imageURL + categoryImage;
 }
