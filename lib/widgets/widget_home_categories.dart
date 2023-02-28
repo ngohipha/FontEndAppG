@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fontend/models/category.model.dart';
 import 'package:fontend/models/pagination.dart';
-import 'package:fontend/providers/category_provider.dart';
+import 'package:fontend/providers/provider.dart';
 
 class HomeCategoriesWidget extends ConsumerWidget {
   const HomeCategoriesWidget({super.key});
