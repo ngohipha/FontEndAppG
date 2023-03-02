@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fontend/models/product.dart';
-import 'package:fontend/pages/product_card.dart';
+import 'package:fontend/widgets/product_card.dart';
 import 'package:fontend/widgets/widget_home_categories.dart';
 import 'package:fontend/widgets/widget_home_products.dart';
 
@@ -14,9 +14,9 @@ class HomePage extends StatelessWidget {
       body: Container(
         child: Container(
           child: ListView(
-            children: [
-              const HomeCategoriesWidget(),
-              const HomeProductsWidget(),
+            children: const  [
+               HomeCategoriesWidget(),
+               HomeProductsWidget(),
             ],
           ),
         ),

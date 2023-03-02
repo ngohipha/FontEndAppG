@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fontend/models/category.model.dart';
 import 'package:fontend/models/pagination.dart';
+import 'package:fontend/models/product_filter.dart';
 import 'package:fontend/providers/provider.dart';
 
 class HomeCategoriesWidget extends ConsumerWidget {
@@ -29,13 +30,13 @@ class HomeCategoriesWidget extends ConsumerWidget {
     );
   }
 
-// danh muc 
+// danh muc
   Widget _categoriesList(WidgetRef ref) {
     final categories =
         ref.watch(categoriesProvider(PaginationModel(page: 1, pageSize: 10)));
     return categories.when(
         data: (list) {
-          return _buildCategoryList(list!);
+          return _buildCategoryList(list!, ref);
         },
         error: (_, __) => const Center(
               child: Text("ERR"),
@@ -45,7 +46,7 @@ class HomeCategoriesWidget extends ConsumerWidget {
             ));
   }
 
-  Widget _buildCategoryList(List<Category> categories) {
+  Widget _buildCategoryList(List<Category> categories, WidgetRef ref) {
     return Container(
       height: 100,
       alignment: Alignment.centerLeft,
@@ -57,13 +58,26 @@ class HomeCategoriesWidget extends ConsumerWidget {
         itemBuilder: (context, index) {
           var data = categories[index];
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              
+              ProductFilterModel filterModel = ProductFilterModel(
+                  paginationModel: PaginationModel(page: 1, pageSize: 10),
+                  categoryId: data.categoryId);
+              ref
+                  .read(productsFilterProvider.notifier)
+                  .setProductFilter(filterModel);
+              ref.read(productsNotifierProvider.notifier).getProducts();
+              Navigator.of(context).pushNamed('/products', arguments: {
+                'categoryId': data.categoryId,
+                'categoryName': data.categoryName,
+              });
+            },
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   Container(
-                    margin: const  EdgeInsets.all(8),
+                    margin: const EdgeInsets.all(8),
                     width: 50,
                     height: 50,
                     alignment: Alignment.center,
