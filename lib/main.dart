@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fontend/pages/home_page.dart';
 import 'package:fontend/pages/products_page.dart';
+import 'package:fontend/pages/register_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -18,8 +19,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage(),
+        home: const RegisterPage(),
         routes: <String, WidgetBuilder>{
+          '/register': (BuildContext context) => const RegisterPage(),
           '/products': (BuildContext context) => const ProductsPage()
         });
   }
