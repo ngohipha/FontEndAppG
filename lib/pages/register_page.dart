@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fontend/api/api.service.dart';
 import 'package:fontend/config.dart';
@@ -238,6 +239,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     FormHelper.showSimpleAlertDialog(context, Config.appName,
                         "Registration completed successfully", "Ok", () {
                       Navigator.of(context).pop();
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil("/login", (route) => false);
                     });
                   } else {
                     FormHelper.showSimpleAlertDialog(context, Config.appName,
@@ -269,7 +272,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       text: "Sign In",
                       style: TextStyle(
                           color: Colors.deepOrange,
-                          fontWeight: FontWeight.bold))
+                          fontWeight: FontWeight.bold),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              "/login", (route) => false);
+                        }),
                 ])),
           )
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fontend/pages/home_page.dart';
+import 'package:fontend/pages/login_page.dart';
 import 'package:fontend/pages/products_page.dart';
 import 'package:fontend/pages/register_page.dart';
 
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
         home: const RegisterPage(),
         routes: <String, WidgetBuilder>{
           '/register': (BuildContext context) => const RegisterPage(),
+          '/login': (BuildContext context) => const LoginPage(),
+          '/home': (BuildContext context) => const HomePage(),
           '/products': (BuildContext context) => const ProductsPage()
         });
   }
