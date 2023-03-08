@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fontend/models/category.model.dart';
+import 'package:fontend/models/login_response_model.dart';
 import 'package:fontend/models/product.dart';
 import 'package:fontend/models/product_filter.dart';
+import 'package:fontend/utils/shared_service.dart';
 import 'package:http/http.dart' as http;
 
 import '../config.dart';
@@ -85,6 +87,7 @@ class APIService {
         headers: requestHeaders,
         body: jsonEncode({"email": email, "password": password}));
     if (response.statusCode == 200) {
+      await SharedService.setLoginDetails(loginResponseJson(response.body));
       return true;
     } else {
       return false;

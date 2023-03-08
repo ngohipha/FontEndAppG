@@ -4,8 +4,17 @@ import 'package:fontend/pages/home_page.dart';
 import 'package:fontend/pages/login_page.dart';
 import 'package:fontend/pages/products_page.dart';
 import 'package:fontend/pages/register_page.dart';
+import 'package:fontend/utils/shared_service.dart';
 
-void main() {
+//check login
+Widget _defaultHome = const LoginPage();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  bool _result = await SharedService.isLoggedIn();
+
+  if (_result) {
+    _defaultHome = const HomePage();
+  }
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -20,8 +29,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const RegisterPage(),
+        // home: const RegisterPage(),
         routes: <String, WidgetBuilder>{
+          '/': (context) => _defaultHome,
           '/register': (BuildContext context) => const RegisterPage(),
           '/login': (BuildContext context) => const LoginPage(),
           '/home': (BuildContext context) => const HomePage(),
