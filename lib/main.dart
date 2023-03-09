@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fontend/pages/dashboard_page.dart';
 import 'package:fontend/pages/home_page.dart';
 import 'package:fontend/pages/login_page.dart';
 import 'package:fontend/pages/products_page.dart';
@@ -13,7 +14,7 @@ void main() async {
   bool _result = await SharedService.isLoggedIn();
 
   if (_result) {
-    _defaultHome = const HomePage();
+    _defaultHome = const DashBoardPage();
   }
   runApp(const ProviderScope(child: MyApp()));
 }

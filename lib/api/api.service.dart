@@ -5,6 +5,7 @@ import 'package:fontend/models/category.model.dart';
 import 'package:fontend/models/login_response_model.dart';
 import 'package:fontend/models/product.dart';
 import 'package:fontend/models/product_filter.dart';
+import 'package:fontend/models/slider.dart';
 import 'package:fontend/utils/shared_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -91,6 +92,28 @@ class APIService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<List<SliderModel>?> getSliders(page, pageSize) async {
+    Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
+
+    Map<String, String> queryString = {
+      'page': page.toString(),
+      'pageSize': pageSize.toString()
+    };
+    var url = Uri.http(Config.apiURL, Config.sliderAPI, queryString);
+
+    var response = await client.get(
+      url,
+      headers: requestHeaders,
+    );
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+
+      return sliderFromJson(data["data"]);
+    } else {
+      return null;
     }
   }
 }
