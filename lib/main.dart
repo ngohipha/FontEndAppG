@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fontend/pages/dashboard_page.dart';
 import 'package:fontend/pages/home_page.dart';
 import 'package:fontend/pages/login_page.dart';
+import 'package:fontend/pages/product_details_page.dart';
 import 'package:fontend/pages/products_page.dart';
 import 'package:fontend/pages/register_page.dart';
 import 'package:fontend/utils/shared_service.dart';
@@ -36,7 +37,9 @@ class MyApp extends StatelessWidget {
           '/register': (BuildContext context) => const RegisterPage(),
           '/login': (BuildContext context) => const LoginPage(),
           '/home': (BuildContext context) => const HomePage(),
-          '/products': (BuildContext context) => const ProductsPage()
+          '/products': (BuildContext context) => const ProductsPage(),
+          '/product-details': (BuildContext context) =>
+              const ProductDetailsPage(),
         });
   }
 }

@@ -39,11 +39,16 @@ class APIService {
       'page': productFilterModel.paginationModel.page.toString(),
       'pageSize': productFilterModel.paginationModel.pageSize.toString(),
     };
+
     if (productFilterModel.categoryId != null) {
       queryString["categoryId"] = productFilterModel.categoryId!;
     }
     if (productFilterModel.sortBy != null) {
       queryString["sort"] = productFilterModel.sortBy!;
+    }
+    // check id san pham co hay k  , dau , kt ngay thang
+    if (productFilterModel.productIds != null) {
+      queryString["productIds"] = productFilterModel.productIds!.join(",");
     }
     var url = Uri.http(Config.apiURL, Config.productAPI, queryString);
 
@@ -102,6 +107,7 @@ class APIService {
       'page': page.toString(),
       'pageSize': pageSize.toString()
     };
+
     var url = Uri.http(Config.apiURL, Config.sliderAPI, queryString);
 
     var response = await client.get(
@@ -112,6 +118,20 @@ class APIService {
       var data = jsonDecode(response.body);
 
       return sliderFromJson(data["data"]);
+    } else {
+      return null;
+    }
+  }
+
+  Future<Product?> getProductDetails(String productId) async {
+    Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
+
+    var url = Uri.http(Config.apiURL, Config.productAPI + "/" + productId);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      return Product.fromJson(data["data"]);
     } else {
       return null;
     }

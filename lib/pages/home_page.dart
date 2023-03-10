@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fontend/models/product.dart';
-import 'package:fontend/widgets/product_card.dart';
+import 'package:fontend/components/product_card.dart';
 import 'package:fontend/widgets/widget_home_categories.dart';
 import 'package:fontend/widgets/widget_home_products.dart';
 import 'package:fontend/widgets/widget_home_slider.dart';

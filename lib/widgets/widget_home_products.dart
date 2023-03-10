@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fontend/models/pagination.dart';
 import 'package:fontend/models/product.dart';
 import 'package:fontend/models/product_filter.dart';
-import 'package:fontend/widgets/product_card.dart';
+import 'package:fontend/components/product_card.dart';
 import 'package:fontend/providers/provider.dart';
 
 class HomeProductsWidget extends ConsumerWidget {

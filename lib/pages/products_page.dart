@@ -4,7 +4,7 @@ import 'package:fontend/models/pagination.dart';
 import 'package:fontend/models/product_filter.dart';
 import 'package:fontend/models/product_sort.dart';
 import 'package:fontend/providers/provider.dart';
-import 'package:fontend/widgets/product_card.dart';
+import 'package:fontend/components/product_card.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
