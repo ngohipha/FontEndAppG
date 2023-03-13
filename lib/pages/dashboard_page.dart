@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fontend/pages/cart_page.dart';
 import 'package:fontend/pages/home_page.dart';
 
 class DashBoardPage extends StatefulWidget {
@@ -12,7 +13,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   @override
   final List<Widget> widgetList = const [
     HomePage(),
-    HomePage(),
+    CartPage(),
     HomePage(),
     HomePage(),
   ];

@@ -8,6 +8,8 @@ import 'package:fontend/pages/products_page.dart';
 import 'package:fontend/pages/register_page.dart';
 import 'package:fontend/utils/shared_service.dart';
 
+final GlobalKey<NavigatorState> navigatorkey = GlobalKey<NavigatorState>();
+
 //check login
 Widget _defaultHome = const LoginPage();
 void main() async {
@@ -17,12 +19,11 @@ void main() async {
   if (_result) {
     _defaultHome = const DashBoardPage();
   }
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({Key? key}) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        navigatorKey: navigatorkey,
         // home: const RegisterPage(),
         routes: <String, WidgetBuilder>{
           '/': (context) => _defaultHome,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fontend/models/cart.dart';
 import 'package:fontend/models/category.model.dart';
 import 'package:fontend/models/login_response_model.dart';
 import 'package:fontend/models/product.dart';
@@ -10,6 +11,7 @@ import 'package:fontend/utils/shared_service.dart';
 import 'package:http/http.dart' as http;
 
 import '../config.dart';
+import '../main.dart';
 
 final apiService = Provider((ref) => APIService());
 
@@ -132,6 +134,84 @@ class APIService {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       return Product.fromJson(data["data"]);
+    } else {
+      return null;
+    }
+  }
+
+  Future<Cart?> getCart() async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      // noi dung de dung token de xem gio hang
+      'Authorization': 'Basic ${loginDetails!.data.token.toString()}'
+    };
+    var url = Uri.http(Config.apiURL, Config.cartAPI);
+
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      return Cart.fromJson(data["data"]);
+      // dan den trang dang nhap
+    } else if (response.statusCode == 401) {
+      navigatorkey.currentState
+          ?.pushNamedAndRemoveUntil("/login", (route) => false);
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool?> addCartItem(productId, qty) async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      // noi dung de dung token de xem gio hang
+      'Authorization': 'Basic ${loginDetails!.data.token.toString()}'
+    };
+    var url = Uri.http(Config.apiURL, Config.cartAPI);
+
+    var response = await client.post(url,
+        headers: requestHeaders,
+        body: jsonEncode({
+          "products": [
+            {"product": productId, "qty": qty}
+          ]
+        }));
+
+    if (response.statusCode == 200) {
+      return true;
+      // dan den trang dang nhap
+    } else if (response.statusCode == 401) {
+      navigatorkey.currentState
+          ?.pushNamedAndRemoveUntil("/login", (route) => false);
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool?> removeCartItem(productId, qty) async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      // noi dung de dung token de xem gio hang
+      'Authorization': 'Basic ${loginDetails!.data.token.toString()}'
+    };
+    var url = Uri.http(Config.apiURL, Config.cartAPI);
+
+    var response = await client.delete(url,
+        headers: requestHeaders,
+        body: jsonEncode({"productId": productId, "qty": qty}));
+
+    if (response.statusCode == 200) {
+      return true;
+      // dan den trang dang nhap
+    } else if (response.statusCode == 401) {
+      navigatorkey.currentState
+          ?.pushNamedAndRemoveUntil("/login", (route) => false);
     } else {
       return null;
     }

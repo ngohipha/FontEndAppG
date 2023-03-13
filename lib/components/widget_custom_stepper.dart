@@ -48,7 +48,7 @@ class _CustomStepperState extends State<CustomStepper> {
                 widget.value = widget.value == widget.lowerLimit
                     ? widget.lowerLimit
                     : widget.value -= widget.stepValue;
-                widget.onChanged(widget.value);
+                widget.onChanged({"qty": widget.value, "type":"-"});
               });
             },
           ),
@@ -76,7 +76,7 @@ class _CustomStepperState extends State<CustomStepper> {
                     ? widget.upperLimit
                     : widget.value += widget.stepValue;
 
-                widget.onChanged(widget.value);
+                widget.onChanged({"qty": widget.value, "type":"+"});
               });
             },
           ),
