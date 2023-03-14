@@ -12,8 +12,8 @@ abstract class Cart with _$Cart {
     required List<CartProduct> products,
     required String cartId,
   }) = _Cart;
+    factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
 
-  factory Cart.fromJson(Map<String, dynamic> json) => _$CartFromJson(json);
 }
 
 extension CartExt on Cart {

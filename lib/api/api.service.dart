@@ -173,13 +173,20 @@ class APIService {
     };
     var url = Uri.http(Config.apiURL, Config.cartAPI);
 
-    var response = await client.post(url,
-        headers: requestHeaders,
-        body: jsonEncode({
+    var response = await client.post(
+      url,
+      headers: requestHeaders,
+      body: jsonEncode(
+        {
           "products": [
-            {"product": productId, "qty": qty}
+            {
+              "product": productId,
+              "qty": qty,
+            }
           ]
-        }));
+        },
+      ),
+    );
 
     if (response.statusCode == 200) {
       return true;
@@ -202,9 +209,17 @@ class APIService {
     };
     var url = Uri.http(Config.apiURL, Config.cartAPI);
 
-    var response = await client.delete(url,
-        headers: requestHeaders,
-        body: jsonEncode({"productId": productId, "qty": qty}));
+    var response = await client.delete(
+      url,
+      headers: requestHeaders,
+      body: jsonEncode(
+        
+        {
+          "productId": productId,
+          "qty": qty,
+         },
+      ),
+    );
 
     if (response.statusCode == 200) {
       return true;

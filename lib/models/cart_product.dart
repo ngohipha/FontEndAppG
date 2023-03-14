@@ -12,5 +12,5 @@ abstract class CartProduct with _$CartProduct {
     required Product product,
   }) = _CartProduct;
   factory CartProduct.fromJson(Map<String, dynamic> json) =>
-    _$CartProductFromJson(json);
+      _$CartProductFromJson(json);
 }

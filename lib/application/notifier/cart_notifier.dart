@@ -12,7 +12,7 @@ class CartNotifier extends StateNotifier<CartState> {
     state = state.copyWith(isLoading: true);
     final cartData = await _apiService.getCart();
     state = state.copyWith(cartModel: cartData);
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: false);
   }
 
   Future<void> addCartItem(productId, qty) async {
@@ -26,8 +26,11 @@ class CartNotifier extends StateNotifier<CartState> {
         .firstWhere((element) => element.product.productId == productId);
 
     var updateItems = state.cartModel!;
+    // tạo 1 danh sách mới 
+    List<CartProduct> cartProducts = List.from(updateItems.products);
+    cartProducts.remove(isCartItemExist);
+    updateItems = updateItems.copyWith(products: cartProducts);
 
-    updateItems.products.remove(isCartItemExist);
     state = state.copyWith(cartModel: updateItems);
   }
 
@@ -36,23 +39,29 @@ class CartNotifier extends StateNotifier<CartState> {
         .firstWhere((element) => element.product.productId == productId);
 
     var updatedItems = state.cartModel!;
-    // kt loai do co bi tru` hay k 
+    // kt loai do co bi tru` hay k
     if (type == "-") {
       await _apiService.removeCartItem(productId, 1);
       if (cartItem.qty > 1) {
         CartProduct cartProduct =
             CartProduct(qty: cartItem.qty - 1, product: cartItem.product);
-        updatedItems.products.remove(cartItem);
-        updatedItems.products.add(cartProduct);
+        List<CartProduct> cartProducts = List.from(updatedItems.products);
+        cartProducts.remove(cartItem);
+        cartProducts.add(cartProduct);
+        updatedItems = updatedItems.copyWith(products: cartProducts);
       } else {
-        updatedItems.products.remove(cartItem);
+        List<CartProduct> cartProducts = List.from(updatedItems.products);
+        cartProducts.remove(cartItem);
+        updatedItems = updatedItems.copyWith(products: cartProducts);
       }
     } else {
       await _apiService.addCartItem(productId, 1);
       CartProduct cartProduct =
           CartProduct(qty: cartItem.qty + 1, product: cartItem.product);
-      updatedItems.products.remove(cartItem);
-      updatedItems.products.add(cartProduct);
+      List<CartProduct> cartProducts = List.from(updatedItems.products);
+      cartProducts.remove(cartItem);
+      cartProducts.add(cartProduct);
+      updatedItems = updatedItems.copyWith(products: cartProducts);
     }
     state = state.copyWith(cartModel: updatedItems);
   }
